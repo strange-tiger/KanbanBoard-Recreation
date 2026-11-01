@@ -1,0 +1,122 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f4f5f7;
+  color: #222;
+}
+
+.app {
+  min-height: 100vh;
+}
+
+.header {
+  padding: 24px;
+  background-color: white;
+  border-bottom: 1px solid #ddd;
+}
+
+.header h1 {
+  margin: 0;
+}
+
+.main {
+  padding: 24px;
+}
+
+.kanban-board {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.board-column {
+  flex: 1;
+  min-width: 0;
+  padding: 16px;
+  background-color: #e9ebef;
+  border-radius: 8px;
+}
+
+.column-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.column-header h2 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.task-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.task-card {
+  padding: 16px;
+  background-color: white;
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.kanban-container {
+  width: 100%;
+}
+
+.add-column-form {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.add-column-form input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.add-column-form button,
+.column-header button {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.add-column-form button {
+  background-color: #2563eb;
+  color: white;
+}
+
+.column-header h2 {
+  cursor: pointer;
+}
+
+.column-header form {
+  display: flex;
+  gap: 5px;
+}
+
+.column-header input {
+  width: 110px;
+  padding: 6px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.delete-column-button {
+  background-color: transparent;
+  color: #dc2626;
+  font-size: 20px;
+}
+
+.delete-column-button:hover {
+  background-color: #fee2e2;
+}
