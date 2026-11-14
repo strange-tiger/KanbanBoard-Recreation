@@ -45,21 +45,22 @@ function KanbanBoard() {
       tasks: []
     }
 
-    setColumns(function(prevColumns) {
-      const updatedColumns = [];
-
-      for (let i = 0; i < prevColumns.length; i++)
-      {
-        updatedColumns.push(prevColumns[i]);
-      }
-
-      updatedColumns.push(newColumn);
-
-      return updatedColumns;
-    });
+    setColumns((prevColumns) => prevColumns.concat(newColumn));
 
     setNewColumnTitle("");
-  };
+  }
+
+  const renameColumn = (columnId, newTitle) => {
+    setColumns((prevColumns) => prevColumns.map((column) =>
+      column.id === columnId ?
+        {
+          id: column.id,
+          title: newTitle,
+          tasks: column.tasks
+        }
+        : column)
+    );
+  }
 
   return (
     <div className="kanban-container">
@@ -69,6 +70,7 @@ function KanbanBoard() {
             key={column.id}
             title={column.title}
             tasks={column.tasks}
+            onRename={(newTitle) => renameColumn(column.id, newTitle)}
           />
         ))}
       </div>
