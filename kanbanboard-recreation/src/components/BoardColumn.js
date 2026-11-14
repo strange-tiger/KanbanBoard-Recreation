@@ -1,17 +1,18 @@
 
 import { useState } from "react";
+import TaskCard from "./TaskCard";
 
-function BoardColumn({ title, tasks, onRename, onDelete }) {
+function BoardColumn({ id, title, tasks, onRename, onDelete, onAddTask }) {
   const [isEditing, setIsEditing] = useState(false);
   const [editedTitle, setEditedTitle] = useState(title);
+  const [taskTitle, setTaskTitle] = useState("");
 
-  // 이름 변경 저장
   const handleRename = (event) => {
     event.preventDefault();
 
     const newTitle = editedTitle.trim();
 
-    if (!newTitle) {
+    if (newTitle.length === 0) {
       setEditedTitle(title);
       setIsEditing(false);
       return;
@@ -20,6 +21,18 @@ function BoardColumn({ title, tasks, onRename, onDelete }) {
     onRename(newTitle);
     setIsEditing(false);
   };
+
+  const handleAddTask = (event) => {
+    event.preventDefault();
+
+    if (taskTitle.trim().length === 0)
+    {
+        return;
+    }
+
+    onAddTask(id, taskTitle);
+    setTaskTitle("");
+  }
 
   return (
     <div className="board-column">
@@ -59,11 +72,27 @@ function BoardColumn({ title, tasks, onRename, onDelete }) {
       </div>
       <div className="task-list">
         {tasks.map((task) => (
-          <div className="task-card" key={task.id}>
-            {task.title}
-          </div>
+          <TaskCard
+            key={task.id}
+            task={task}
+          />
         ))}
       </div>
+
+      <form className="add-task-form" onSubmit={handleAddTask}>
+        <input
+          type="text"
+          placeholder="Enter task title..."
+          value={taskTitle}
+          onChange={(event) =>
+            setTaskTitle(event.target.value)
+          }
+        />
+
+        <button type="submit">
+          + Add Task
+        </button>
+      </form>
     </div>
   );
 }

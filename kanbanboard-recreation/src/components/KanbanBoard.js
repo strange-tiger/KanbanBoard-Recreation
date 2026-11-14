@@ -67,16 +67,44 @@ function KanbanBoard() {
     );
   };
 
+  const addTask = (columnId, taskTitle) => {
+    const title = taskTitle.trim();
+
+    if (title.length === 0)
+    {
+      return;
+    }
+
+    const newTask = {
+      id: `${Date.now()}`,
+      title
+    }
+
+    setColumns((prevColumns) =>
+      prevColumns.map((column) =>
+        column.id === columnId
+          ? {
+              id: column.id,
+              title: column.title,
+              tasks: column.tasks.concat(newTask)
+            }
+            : column
+      )
+    );
+  }
+
   return (
     <div className="kanban-container">
       <div className="kanban-board">
         {columns.map((column) => (
           <BoardColumn
             key={column.id}
+            id={column.id}
             title={column.title}
             tasks={column.tasks}
             onRename={(newTitle) => renameColumn(column.id, newTitle)}
             onDelete={() => deleteColumn(column.id)}
+            onAddTask={addTask}
           />
         ))}
       </div>
