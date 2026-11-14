@@ -176,3 +176,50 @@ body {
   background-color: #fee2e2;
   border-radius: 4px;
 }
+
+.task-card form {
+  display: flex;
+  flex: 1;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.task-card input {
+  flex: 1 1 100%;
+  min-width: 0;
+  padding: 9px 10px;
+  border: 1px solid #93c5fd;
+  border-radius: 6px;
+  background-color: white;
+  font-size: 14px;
+}
+
+.task-card input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+.task-card form button {
+  padding: 7px 12px;
+  border: none;
+  border-radius: 6px;
+  font-size: 13px;
+}
+
+.task-card form button[type="submit"] {
+  background-color: #2563eb;
+  color: white;
+}
+
+.task-card form button[type="submit"]:hover {
+  background-color: #1d4ed8;
+}
+
+.task-card form button[type="button"] {
+  background-color: #e5e7eb;
+  color: #475569;
+}
+
+.task-card form button[type="button"]:hover {
+  background-color: #cbd5e1;
+}
