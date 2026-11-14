@@ -27,15 +27,66 @@ function KanbanBoard() {
     }
   ]);
 
+  const [newColumnTitle, setNewColumnTitle] = useState("");
+
+  const addColumn = (event) => {
+    event.preventDefault();
+
+    const title = newColumnTitle.trim();
+
+    if (title.length === 0)
+    {
+      return;
+    }
+
+    const newColumn = {
+      id: Date.now(),
+      title: title,
+      tasks: []
+    }
+
+    setColumns(function(prevColumns) {
+      const updatedColumns = [];
+
+      for (let i = 0; i < prevColumns.length; i++)
+      {
+        updatedColumns.push(prevColumns[i]);
+      }
+
+      updatedColumns.push(newColumn);
+
+      return updatedColumns;
+    });
+
+    setNewColumnTitle("");
+  };
+
   return (
-    <div className="kanban-board">
-      {columns.map((column) => (
-        <BoardColumn
-          key={column.id}
-          title={column.title}
-          tasks={column.tasks}
+    <div className="kanban-container">
+      <div className="kanban-board">
+        {columns.map((column) => (
+          <BoardColumn
+            key={column.id}
+            title={column.title}
+            tasks={column.tasks}
+          />
+        ))}
+      </div>
+
+      <form className="add-column-form" onSubmit={addColumn}>
+        <input
+          type="text"
+          placeholder="New column name"
+          value={newColumnTitle}
+          onChange={(event) =>
+            setNewColumnTitle(event.target.value)
+          }
         />
-      ))}
+
+        <button type="submit">
+          + Add Column
+        </button>
+      </form>
     </div>
   );
 }
