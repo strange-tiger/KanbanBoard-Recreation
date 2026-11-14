@@ -62,6 +62,11 @@ function KanbanBoard() {
     );
   }
 
+  const deleteColumn = (columnId) => {
+    setColumns((prevColumns) => prevColumns.filter((column) => column.id !== columnId)
+    );
+  };
+
   return (
     <div className="kanban-container">
       <div className="kanban-board">
@@ -71,6 +76,7 @@ function KanbanBoard() {
             title={column.title}
             tasks={column.tasks}
             onRename={(newTitle) => renameColumn(column.id, newTitle)}
+            onDelete={() => deleteColumn(column.id)}
           />
         ))}
       </div>

@@ -48,6 +48,14 @@ function BoardColumn({ title, tasks, onRename, onDelete }) {
           </h2>
         )}
         <span>{tasks.length}</span>
+
+        <button
+          className="delete-column-button"
+          onClick={onDelete}
+          title="Delete column"
+        >
+          ×
+        </button>
       </div>
       <div className="task-list">
         {tasks.map((task) => (
