@@ -93,6 +93,22 @@ function KanbanBoard() {
     );
   }
 
+  const deleteTask = (columnId, taskId) => {
+    setColumns((prevColumns) =>
+        prevColumns.map((column) =>
+            column.id === columnId
+                ? {
+                    id: column.id,
+                    title: column.title,
+                    tasks: column.tasks.filter(
+                        (task) => task.id !== taskId
+                    )
+                }
+                : column
+          )
+      );
+  };
+
   return (
     <div className="kanban-container">
       <div className="kanban-board">
@@ -102,9 +118,10 @@ function KanbanBoard() {
             id={column.id}
             title={column.title}
             tasks={column.tasks}
-            onRename={(newTitle) => renameColumn(column.id, newTitle)}
-            onDelete={() => deleteColumn(column.id)}
+            onRenameColumn={(newTitle) => renameColumn(column.id, newTitle)}
+            onDeleteColumn={() => deleteColumn(column.id)}
             onAddTask={addTask}
+            onDeleteTask={deleteTask}
           />
         ))}
       </div>

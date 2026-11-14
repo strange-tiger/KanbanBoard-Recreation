@@ -2,7 +2,7 @@
 import { useState } from "react";
 import TaskCard from "./TaskCard";
 
-function BoardColumn({ id, title, tasks, onRename, onDelete, onAddTask }) {
+function BoardColumn({ id, title, tasks, onRenameColumn, onDeleteColumn, onAddTask, onDeleteTask }) {
   const [isEditing, setIsEditing] = useState(false);
   const [editedTitle, setEditedTitle] = useState(title);
   const [taskTitle, setTaskTitle] = useState("");
@@ -18,7 +18,7 @@ function BoardColumn({ id, title, tasks, onRename, onDelete, onAddTask }) {
       return;
     }
 
-    onRename(newTitle);
+    onRenameColumn(newTitle);
     setIsEditing(false);
   };
 
@@ -64,7 +64,7 @@ function BoardColumn({ id, title, tasks, onRename, onDelete, onAddTask }) {
 
         <button
           className="delete-column-button"
-          onClick={onDelete}
+          onClick={onDeleteColumn}
           title="Delete column"
         >
           ×
@@ -75,6 +75,7 @@ function BoardColumn({ id, title, tasks, onRename, onDelete, onAddTask }) {
           <TaskCard
             key={task.id}
             task={task}
+            onDelete={() => onDeleteTask(id, task.id)}
           />
         ))}
       </div>
