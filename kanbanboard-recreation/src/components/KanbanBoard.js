@@ -7,23 +7,25 @@ function KanbanBoard() {
       id: "todo",
       title: `Todo`,
       tasks: [
-        { id: 1, title: "React 공부하기" },
-        { id: 2, title: "Kanban UI 만들기" }
+        {
+          id: 1,
+          title: "React 공부하기",
+          description: "React의 State와 Effect 학습하기",
+          priority: "high",
+          dueDate: "2026-11-30",
+          progress: 50
+        }
       ]
     },
     {
       id: "progress",
       title: `In progress`,
-      tasks: [
-        { id: 3, title: "컴포넌트 분석하기" }
-      ]
+      tasks: []
     },
     {
       id: "done",
       title: `Done`,
-      tasks: [
-        { id: 4, title: "React 프로젝트 생성" }
-      ]
+      tasks: []
     }
   ]);
 
@@ -32,7 +34,8 @@ function KanbanBoard() {
   useEffect(() => {
     const savedColumns = localStorage.getItem("kanban-columns");
 
-    if (savedColumns !== null) {
+    if (savedColumns !== null)
+    {
       setColumns(JSON.parse(savedColumns));
     }
 
@@ -101,6 +104,10 @@ function KanbanBoard() {
 
     const newTask = {
       id: `${Date.now()}`,
+      description: "",
+      priority: "medium",
+      dueDate: "",
+      progress: 0,
       title
     }
 
