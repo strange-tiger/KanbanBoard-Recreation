@@ -27,14 +27,31 @@ function KanbanBoard() {
     }
   ]);
 
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    const savedColumns = localStorage.getItem("kanban-columns");
+
+    if (savedColumns !== null) {
+      setColumns(JSON.parse(savedColumns));
+    }
+
+    setIsLoaded(true);
+  }, []);
+
   const [newColumnTitle, setNewColumnTitle] = useState("");
 
   useEffect(() => {
+    if (!isLoaded)
+    {
+      return;
+    }
+
     localStorage.setItem(
       "kanban-columns",
       JSON.stringify(columns)
     );
-  }, [columns]);
+  }, [columns, isLoaded]);
 
   const addColumn = (event) => {
     event.preventDefault();
