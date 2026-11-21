@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import BoardColumn from "./BoardColumn";
 
 function KanbanBoard() {
@@ -28,6 +28,13 @@ function KanbanBoard() {
   ]);
 
   const [newColumnTitle, setNewColumnTitle] = useState("");
+
+  useEffect(() => {
+    localStorage.setItem(
+      "kanban-columns",
+      JSON.stringify(columns)
+    );
+  }, [columns]);
 
   const addColumn = (event) => {
     event.preventDefault();
