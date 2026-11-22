@@ -146,19 +146,6 @@ https://github.com/leriuz/react-kanban-board
 
 현재 프로젝트의 기본적인 Task 관리 기능과 데이터 처리 구조를 비교하는 용도로 활용합니다.
 
-### 3. react-kanban
-
-https://github.com/jonatakuzi/react-kanban
-
-**참고할 내용**
-- React Hooks
-- Task 추가 및 삭제
-- LocalStorage 데이터 저장
-- 진행 상황 통계
-- HTML5 Drag & Drop
-
-React의 기본 개념과 간단한 칸반 보드 기능을 복습하는 용도로 활용합니다.
-
 참고 프로젝트의 코드를 그대로 사용하는 대신, 현재 프로젝트의 JavaScript + JSX 구조에 맞춰 필요한 기능과 구현 방식을 학습하고 적용합니다.
 
 ## Project Goal
