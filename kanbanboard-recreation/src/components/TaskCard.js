@@ -1,6 +1,7 @@
 import { useState } from "react";
 
-function TaskCard({ task, onDelete, onRename }) {
+function TaskCard({ task, onDelete, onRename })
+{
   const [isEditing, setIsEditing] = useState(false);
   const [editedTitle, setEditedTitle] = useState(task.title);
 

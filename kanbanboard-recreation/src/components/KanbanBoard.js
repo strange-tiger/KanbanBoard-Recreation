@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import BoardColumn from "./BoardColumn";
+import TaskDetail from './TaskDetail';
 
 function KanbanBoard() {
   const [columns, setColumns] = useState([
@@ -29,6 +30,8 @@ function KanbanBoard() {
     }
   ]);
 
+  const [selectedTask, setSelectedTask] = useState(null);
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
@@ -50,7 +53,8 @@ function KanbanBoard() {
       return;
     }
 
-    localStorage.setItem(
+    localStorage.setItem
+    (
       "kanban-columns",
       JSON.stringify(columns)
     );
@@ -90,8 +94,7 @@ function KanbanBoard() {
   }
 
   const deleteColumn = (columnId) => {
-    setColumns((prevColumns) => prevColumns.filter((column) => column.id !== columnId)
-    );
+    setColumns((prevColumns) => prevColumns.filter((column) => column.id !== columnId));
   };
 
   const addTask = (columnId, taskTitle) => {
@@ -151,7 +154,11 @@ function KanbanBoard() {
               task.id === taskId
                 ? {
                     id: task.id,
-                    title: newTitle
+                    title: newTitle,
+                    description: task.description,
+                    priority: task.priority,
+                    dueDate: task.dueDate,
+                    progress: task.progress
                   }
                 : task
             )
@@ -181,10 +188,10 @@ function KanbanBoard() {
 
       <form className="add-column-form" onSubmit={addColumn}>
         <input
-          type="text"
-          placeholder="New column name"
-          value={newColumnTitle}
-          onChange={(event) =>
+          type = "text"
+          placeholder = "New column name"
+          value = {newColumnTitle}
+          onChange = {(event) =>
             setNewColumnTitle(event.target.value)
           }
         />
@@ -193,6 +200,13 @@ function KanbanBoard() {
           + Add Column
         </button>
       </form>
+      {isPopupOpen && selectedTask !== null && (
+        <TaskDetail
+          task = {selectedTask}
+          setIsPopupOpen = {setIsPopupOpen}
+          onSave = {() => {}}
+        />
+      )}
     </div>
   );
 }

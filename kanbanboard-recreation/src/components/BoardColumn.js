@@ -2,7 +2,17 @@
 import { useState } from "react";
 import TaskCard from "./TaskCard";
 
-function BoardColumn({ id, title, tasks, onRenameColumn, onDeleteColumn, onAddTask, onDeleteTask, onRenameTask }) {
+function BoardColumn({
+    id,
+    title,
+    tasks,
+    onRenameColumn,
+    onDeleteColumn,
+    onAddTask,
+    onDeleteTask,
+    onRenameTask
+})
+{
   const [isEditing, setIsEditing] = useState(false);
   const [editedTitle, setEditedTitle] = useState(title);
   const [taskTitle, setTaskTitle] = useState("");
