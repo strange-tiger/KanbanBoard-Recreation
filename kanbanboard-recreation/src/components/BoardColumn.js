@@ -10,7 +10,8 @@ function BoardColumn({
     onDeleteColumn,
     onAddTask,
     onDeleteTask,
-    onRenameTask
+    onRenameTask,
+    onOpenTaskDetail
 })
 {
   const [isEditing, setIsEditing] = useState(false);
@@ -86,8 +87,8 @@ function BoardColumn({
             key={task.id}
             task={task}
             onDelete={() => onDeleteTask(id, task.id)}
-            onRename={(newTitle) => onRenameTask(id, task.id, newTitle)
-}
+            onRename={(newTitle) => onRenameTask(id, task.id, newTitle)}
+            onOpen={() => onOpenTaskDetail(task)}
           />
         ))}
       </div>

@@ -168,6 +168,10 @@ function KanbanBoard()
     );
   };
 
+  const openTaskDetail = (task) => {
+    setSelectedTask(task);
+  };
+
   return (
     <div className="kanban-container">
       <div className="kanban-board">
@@ -182,10 +186,17 @@ function KanbanBoard()
             onAddTask={addTask}
             onDeleteTask={deleteTask}
             onRenameTask={renameTask}
+            onOpenTaskDetail={openTaskDetail}
           />
         ))}
       </div>
-
+      {selectedTask !== null && (
+        <TaskDetail
+          task={selectedTask}
+          onClose={() => setSelectedTask(null)}
+          onSave={() => {}}
+        />
+      )}
       <form className="add-column-form" onSubmit={addColumn}>
         <input
           type = "text"

@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function TaskCard({ task, onDelete, onRename })
+function TaskCard({ task, onDelete, onRename, onOpen })
 {
   const [isEditing, setIsEditing] = useState(false);
   const [editedTitle, setEditedTitle] = useState(task.title);
@@ -21,7 +21,7 @@ function TaskCard({ task, onDelete, onRename })
     setIsEditing(false);
   }
   return (
-    <div className="task-card">
+    <div className="task-card" onClick = {onOpen}>
       {isEditing ? (
         <form onSubmit={handleRename}>
           <input
