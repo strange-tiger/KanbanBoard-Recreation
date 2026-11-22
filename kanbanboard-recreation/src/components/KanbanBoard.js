@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react';
 import BoardColumn from "./BoardColumn";
 import TaskDetail from './TaskDetail';
 
-function KanbanBoard() {
+function KanbanBoard()
+{
   const [columns, setColumns] = useState([
     {
       id: "todo",
@@ -31,7 +32,6 @@ function KanbanBoard() {
   ]);
 
   const [selectedTask, setSelectedTask] = useState(null);
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
@@ -200,13 +200,6 @@ function KanbanBoard() {
           + Add Column
         </button>
       </form>
-      {isPopupOpen && selectedTask !== null && (
-        <TaskDetail
-          task = {selectedTask}
-          setIsPopupOpen = {setIsPopupOpen}
-          onSave = {() => {}}
-        />
-      )}
     </div>
   );
 }

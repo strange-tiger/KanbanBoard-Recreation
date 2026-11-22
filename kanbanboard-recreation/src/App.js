@@ -1,7 +1,8 @@
 import "./App.css";
 import KanbanBoard from "./components/KanbanBoard";
 
-function App() {
+function App()
+{
   return (
     <div className="app">
       <header className="header">
