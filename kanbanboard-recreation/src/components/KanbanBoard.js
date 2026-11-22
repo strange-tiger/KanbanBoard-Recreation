@@ -1,33 +1,64 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import BoardColumn from "./BoardColumn";
+import TaskDetail from './TaskDetail';
 
-function KanbanBoard() {
+function KanbanBoard()
+{
   const [columns, setColumns] = useState([
     {
       id: "todo",
       title: `Todo`,
       tasks: [
-        { id: 1, title: "React 공부하기" },
-        { id: 2, title: "Kanban UI 만들기" }
+        {
+          id: 1,
+          title: "React 공부하기",
+          description: "React의 State와 Effect 학습하기",
+          priority: "high",
+          dueDate: "2026-11-30",
+          progress: 50
+        }
       ]
     },
     {
       id: "progress",
       title: `In progress`,
-      tasks: [
-        { id: 3, title: "컴포넌트 분석하기" }
-      ]
+      tasks: []
     },
     {
       id: "done",
       title: `Done`,
-      tasks: [
-        { id: 4, title: "React 프로젝트 생성" }
-      ]
+      tasks: []
     }
   ]);
 
+  const [selectedTask, setSelectedTask] = useState(null);
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    const savedColumns = localStorage.getItem("kanban-columns");
+
+    if (savedColumns !== null)
+    {
+      setColumns(JSON.parse(savedColumns));
+    }
+
+    setIsLoaded(true);
+  }, []);
+
   const [newColumnTitle, setNewColumnTitle] = useState("");
+
+  useEffect(() => {
+    if (!isLoaded)
+    {
+      return;
+    }
+
+    localStorage.setItem
+    (
+      "kanban-columns",
+      JSON.stringify(columns)
+    );
+  }, [columns, isLoaded]);
 
   const addColumn = (event) => {
     event.preventDefault();
@@ -63,7 +94,101 @@ function KanbanBoard() {
   }
 
   const deleteColumn = (columnId) => {
-    setColumns((prevColumns) => prevColumns.filter((column) => column.id !== columnId)
+    setColumns((prevColumns) => prevColumns.filter((column) => column.id !== columnId));
+  };
+
+  const addTask = (columnId, taskTitle) => {
+    const title = taskTitle.trim();
+
+    if (title.length === 0)
+    {
+      return;
+    }
+
+    const newTask = {
+      id: `${Date.now()}`,
+      description: "",
+      priority: "medium",
+      dueDate: "",
+      progress: 0,
+      title
+    }
+
+    setColumns((prevColumns) =>
+      prevColumns.map((column) =>
+        column.id === columnId
+          ? {
+              id: column.id,
+              title: column.title,
+              tasks: column.tasks.concat(newTask)
+            }
+            : column
+      )
+    );
+  }
+
+  const deleteTask = (columnId, taskId) => {
+    setColumns((prevColumns) =>
+        prevColumns.map((column) =>
+            column.id === columnId
+                ? {
+                    id: column.id,
+                    title: column.title,
+                    tasks: column.tasks.filter(
+                        (task) => task.id !== taskId
+                    )
+                }
+                : column
+          )
+      );
+  };
+
+  const renameTask = (columnId, taskId, newTitle) => {
+  setColumns((prevColumns) =>
+    prevColumns.map((column) =>
+      column.id === columnId
+        ? {
+            id: column.id,
+            title: column.title,
+            tasks: column.tasks.map((task) =>
+              task.id === taskId
+                ? {
+                    id: task.id,
+                    title: newTitle,
+                    description: task.description,
+                    priority: task.priority,
+                    dueDate: task.dueDate,
+                    progress: task.progress
+                  }
+                : task
+            )
+          }
+        : column
+      )
+    );
+  };
+
+  const openTaskDetail = (task, columnId) => {
+    setSelectedTask({
+      ...task,
+      columnId
+    });
+  };
+
+  const updateTask = (columnId, taskId, updatedTask) => {
+    setColumns((prevColumns) =>
+      prevColumns.map((column) =>
+        column.id === columnId
+          ? {
+              ...column,
+              tasks: column.tasks.map((task) =>
+                task.id === taskId
+                  ? updatedTask
+                  : task
+              )
+            }
+          : column
+      )
     );
   };
 
@@ -73,20 +198,40 @@ function KanbanBoard() {
         {columns.map((column) => (
           <BoardColumn
             key={column.id}
+            id={column.id}
             title={column.title}
             tasks={column.tasks}
-            onRename={(newTitle) => renameColumn(column.id, newTitle)}
-            onDelete={() => deleteColumn(column.id)}
+            onRenameColumn={(newTitle) => renameColumn(column.id, newTitle)}
+            onDeleteColumn={() => deleteColumn(column.id)}
+            onAddTask={addTask}
+            onDeleteTask={deleteTask}
+            onRenameTask={renameTask}
+            onOpenTaskDetail={openTaskDetail}
           />
         ))}
       </div>
+      {selectedTask !== null && (
+        <TaskDetail
+          task={selectedTask}
+          onClose={() => setSelectedTask(null)}
+          onSave={(updatedTask) => {
+            updateTask
+            (
+              selectedTask.columnId,
+              selectedTask.id,
+              updatedTask
+            );
 
+            setSelectedTask(null);
+          }}
+        />
+      )}
       <form className="add-column-form" onSubmit={addColumn}>
         <input
-          type="text"
-          placeholder="New column name"
-          value={newColumnTitle}
-          onChange={(event) =>
+          type = "text"
+          placeholder = "New column name"
+          value = {newColumnTitle}
+          onChange = {(event) =>
             setNewColumnTitle(event.target.value)
           }
         />
