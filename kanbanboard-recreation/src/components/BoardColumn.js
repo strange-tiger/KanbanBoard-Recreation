@@ -88,7 +88,7 @@ function BoardColumn({
             task={task}
             onDelete={() => onDeleteTask(id, task.id)}
             onRename={(newTitle) => onRenameTask(id, task.id, newTitle)}
-            onOpen={() => onOpenTaskDetail(task)}
+            onOpen={() => onOpenTaskDetail(task, id)}
           />
         ))}
       </div>

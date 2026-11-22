@@ -168,8 +168,28 @@ function KanbanBoard()
     );
   };
 
-  const openTaskDetail = (task) => {
-    setSelectedTask(task);
+  const openTaskDetail = (task, columnId) => {
+    setSelectedTask({
+      ...task,
+      columnId
+    });
+  };
+
+  const updateTask = (columnId, taskId, updatedTask) => {
+    setColumns((prevColumns) =>
+      prevColumns.map((column) =>
+        column.id === columnId
+          ? {
+              ...column,
+              tasks: column.tasks.map((task) =>
+                task.id === taskId
+                  ? updatedTask
+                  : task
+              )
+            }
+          : column
+      )
+    );
   };
 
   return (
@@ -194,7 +214,16 @@ function KanbanBoard()
         <TaskDetail
           task={selectedTask}
           onClose={() => setSelectedTask(null)}
-          onSave={() => {}}
+          onSave={(updatedTask) => {
+            updateTask
+            (
+              selectedTask.columnId,
+              selectedTask.id,
+              updatedTask
+            );
+
+            setSelectedTask(null);
+          }}
         />
       )}
       <form className="add-column-form" onSubmit={addColumn}>

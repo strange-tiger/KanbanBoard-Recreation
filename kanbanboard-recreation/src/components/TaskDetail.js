@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 
 function TaskDetail({ task, onClose, onSave }) {
@@ -21,11 +20,13 @@ function TaskDetail({ task, onClose, onSave }) {
 
   return (
     <div className="modal-overlay">
-      <div className="task-detail-modal">
-        <h2>Task Details</h2>
-        <button type="button" onClick={onClose}>
-          x
-        </button>
+      <div className="task-detail">
+        <div className="task-detail-header">
+          <h2>Task Details</h2>
+          <button type="button" onClick={onClose}>
+            ×
+          </button>
+        </div>
 
         <div className="detail-field">
           <label>Title</label>
@@ -80,6 +81,22 @@ function TaskDetail({ task, onClose, onSave }) {
             value={detail.progress}
             onChange={handleChange}
           />
+        </div>
+
+        <div className="task-detail-buttons">
+          <button
+            type="button"
+            onClick={() => onSave(detail)}
+          >
+            Save
+          </button>
+
+          <button
+            type="button"
+            onClick={onClose}
+          >
+            Cancel
+          </button>
         </div>
       </div>
     </div>
