@@ -7,6 +7,7 @@ function TaskCard({ task, onDelete, onRename, onOpen })
 
   const handleRename = (event) => {
     event.preventDefault();
+    event.stopPropagation();
 
     const newTitle = editedTitle.trim();
 
@@ -31,11 +32,17 @@ function TaskCard({ task, onDelete, onRename, onOpen })
             autoFocus
           />
 
-          <button type="submit">Save</button>
+          <button
+            type="submit"
+            onClick={(event) => event.stopPropagation()}
+          >
+            Save
+          </button>
 
           <button
             type="button"
-            onClick={() => {
+            onClick={(event) => {
+              event.stopPropagation();
               setEditedTitle(task.title);
               setIsEditing(false);
             }}
@@ -45,7 +52,8 @@ function TaskCard({ task, onDelete, onRename, onOpen })
         </form>
       ) : (
         <span
-          onClick={() => {
+          onClick={(event) => {
+            event.stopPropagation();
             setEditedTitle(task.title);
             setIsEditing(true);
           }}
@@ -57,7 +65,10 @@ function TaskCard({ task, onDelete, onRename, onOpen })
 
       <button
         className="delete-task-button"
-        onClick={onDelete}
+        onClick={(event) => {
+          event.stopPropagation();
+          onDelete();
+        }}
         title="Delete task"
       >
         ×

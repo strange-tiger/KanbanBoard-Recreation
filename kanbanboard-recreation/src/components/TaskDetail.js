@@ -23,6 +23,9 @@ function TaskDetail({ task, onClose, onSave }) {
     <div className="modal-overlay">
       <div className="task-detail-modal">
         <h2>Task Details</h2>
+        <button type="button" onClick={onClose}>
+          x
+        </button>
 
         <div className="detail-field">
           <label>Title</label>
